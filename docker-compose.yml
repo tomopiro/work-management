@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+    server:
+        container_name: server
+        build:
+            context: .
+            dockerfile: ./server/Dockerfile
+        ports:
+        - '80:80'
+        volumes:
+        - './server:/go/src/server'
+        working_dir: '/go/src/server'
+        environment:
+            DB_LOG: "true"
+        stdin_open: true
+        tty: true
+        networks:
+        - my_network
+    db:
+        container_name: db
+        build: ./db/
+        image: mysql:8.0
+        environment:
+            MYSQL_ROOT_PASSWORD: work
+            MYSQL_USER: work
+            MYSQL_PASSWORD: work
+            MYSQL_DATABASE: work
+        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        volumes:
+        - ./db/data:/var/lib/mysql
+        - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+        - ./db/initdb.d:/docker-entrypoint-initdb.d
+        - ./db/log:/var/log/mysql
+        ports:
+        - 3306:3306
+        networks:
+        - my_network
+networks:
+    my_network:
