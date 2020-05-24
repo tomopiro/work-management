@@ -1,11 +1,11 @@
-use quuta;
-insert into `users`
+use work;
+insert into `employees`
 (
     id,
     name
 )
 values
 (
-    1,
-    'zoy'
+    '0001',
+    'tanaka'
 );

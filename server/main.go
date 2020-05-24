@@ -14,18 +14,18 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/hello", hello)
-	r.GET("/users", getUsers)
+	r.GET("/employees", getEmployees)
 
 	r.Run(":80")
 }
 
 func gormConnect() *gorm.DB {
 	DBMS := "mysql"
-	USER := "quuta"
-	PASS := "quuta"
+	USER := "test"
+	PASS := "pass"
 	// "tcp('コンテナ名':'ポート番号'"
 	PROTOCOL := "tcp(db:3306)"
-	DBNAME := "quuta"
+	DBNAME := "work"
 
 	// Datetime→time.Timeへの変換のため?parseTime=true を入れる必要あり
 	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME + "?parseTime=true"
@@ -42,11 +42,11 @@ func hello(c *gin.Context) {
 	c.String(http.StatusOK, "Hello world\n")
 }
 
-func getUsers(c *gin.Context) {
+func getEmployees(c *gin.Context) {
 	db := gormConnect()
 	defer db.Close()
 
-	user := model.User{}
-	db.Where("id = ?", "1").First(&user)
-	c.String(http.StatusOK, user.Name+"\n")
+	employee := model.Employee{}
+	db.Where("id = ?", "0001").First(&employee)
+	c.String(http.StatusOK, employee.Name+"\n")
 }

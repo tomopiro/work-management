@@ -2,8 +2,8 @@ package model
 
 import "time"
 
-// User user
-type User struct {
+// Employee employee
+type Employee struct {
 	ID        int
 	Name      string
 	CreatedAt time.Time
